@@ -1,0 +1,74 @@
+{
+ "actions": [],
+ "allow_events_in_timeline": 1,
+ "creation": "2024-07-10 12:50:07.702589",
+ "default_view": "List",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "salary_component",
+  "max_value",
+  "convertor",
+  "leave_type"
+ ],
+ "fields": [
+  {
+   "fieldname": "salary_component",
+   "fieldtype": "Link",
+   "label": "Salary Component ",
+   "options": "Salary Component"
+  },
+  {
+   "fieldname": "max_value",
+   "fieldtype": "Float",
+   "label": "Max Value "
+  },
+  {
+   "fieldname": "convertor",
+   "fieldtype": "Float",
+   "label": "Convertor"
+  },
+  {
+   "fieldname": "leave_type",
+   "fieldtype": "Link",
+   "label": "Leave Type",
+   "options": "Leave Type"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-07-10 12:50:07.702589",
+ "modified_by": "Administrator",
+ "module": "Hr Sum Additionals",
+ "name": "Effected Log Setting",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "HR Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "show_name_in_global_search": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

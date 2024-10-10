@@ -1,0 +1,43 @@
+{
+ "actions": [],
+ "creation": "2023-10-05 18:13:09.028249",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "times",
+  "fixed_amount_value",
+  "rate"
+ ],
+ "fields": [
+  {
+   "fieldname": "fixed_amount_value",
+   "fieldtype": "Currency",
+   "label": "Fixed Amount Value"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Data",
+   "label": "Rate"
+  },
+  {
+   "fieldname": "times",
+   "fieldtype": "Float",
+   "label": "Times"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2023-10-17 10:28:13.385332",
+ "modified_by": "Administrator",
+ "module": "Hr Sum Additionals",
+ "name": "Penalties Data",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,137 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-02-18 10:25:53.543951",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_9u3t",
+  "amended_from",
+  "naming_series",
+  "employee",
+  "department",
+  "designation",
+  "column_break_xynv",
+  "penalty_date",
+  "penalty_type",
+  "salary_component",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_9u3t",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Employee Penalty",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Serios ",
+   "options": "HR-PNLTY-"
+  },
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "label": "Employee",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "employee.department",
+   "fieldname": "department",
+   "fieldtype": "Link",
+   "label": "Department",
+   "options": "Department",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "employee.designation",
+   "fieldname": "designation",
+   "fieldtype": "Link",
+   "label": "Designation",
+   "options": "Designation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_xynv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "penalty_date",
+   "fieldtype": "Date",
+   "label": "Penalty Date"
+  },
+  {
+   "fieldname": "penalty_type",
+   "fieldtype": "Link",
+   "label": "Penalty type",
+   "options": "Penalty Type"
+  },
+  {
+   "fetch_from": "penalty_type.salary_component",
+   "fieldname": "salary_component",
+   "fieldtype": "Link",
+   "label": "Salary component",
+   "options": "Salary Component",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "penalty_type.description",
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-02-20 18:34:10.344201",
+ "modified_by": "Administrator",
+ "module": "Hr Sum Additionals",
+ "name": "Employee Penalty",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
