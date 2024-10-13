@@ -222,8 +222,8 @@ override_doctype_class = {
 #	"hr_sum_additionals.auth.validate"
 # ]
 
-doc_events = {
-    "tabPermission": {
-        "onload": "hr_sum_additionals.public.permission"
-    }
-}
+# doc_events = {
+#     "tabPermission": {
+#         "onload": "hr_sum_additionals.public.permission"
+#     }
+# }
