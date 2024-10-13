@@ -13,7 +13,12 @@ class CustomCheckin(EmployeeCheckin):
         late_penalty_after = shift_data.late_penalty_after
         self.custom_late_penalty_after = late_penalty_after
         self.custom_deduction = calculate_dif_time_and_date(self.time , late_penalty_after)
-        self.custom_early_diiference = abs(calculate_dif_time_and_date(self.time,shift_data.end_time))
+        device_log = self.device_log
+        if device_log:
+            log = frappe.get_doc("Device Log", device_log)
+            if log.punch == 1:
+
+                self.custom_early_diiference = abs(calculate_dif_time_and_date(log.time,shift_data.end_time))
 
     def on_change(self):
         employee = self.employee
