@@ -1,14 +1,24 @@
 from hrms.hr.doctype.employee_checkin.employee_checkin import EmployeeCheckin
 from hr_sum_additionals.hr_sum_additionals.doctype.penalties_rules.penalties_rules import get_the_rule
-from frappe.utils import getdate , get_time
+from frappe.utils import getdate , get_time , cint, get_datetime
 import frappe
 from datetime import datetime , timedelta
+from frappe import _
 
+
+from hrms.hr.doctype.shift_assignment.shift_assignment import (
+	get_actual_start_end_datetime_of_shift,
+)
 
 
 class CustomCheckin(EmployeeCheckin):
     def before_validate(self):
         pass
+    
+    def validate(self):
+       self.validate_duplicate_log()
+       self.fetch_shift()
+		# self.set_geolocation_from_coordinates()
         # shift_type = self.shift
         # shift_data = frappe.get_doc("Shift Type" , shift_type )
         # late_penalty_after = shift_data.late_penalty_after
@@ -108,3 +118,50 @@ def calculate_dif_time_and_date3(futureDate1, timeNow):
     print(f"Total difference: {total_minutes:.2f} minutes ({total_hours:.2f} hours)")
     
     return total_hours
+
+
+
+
+
+
+
+def validate_duplicate_log(self):
+		doc = frappe.db.exists(
+			"Employee Checkin",
+			{
+				"employee": self.employee,
+				"time": self.time,
+				"name": ("!=", self.name),
+				"log_type": self.log_type,
+			},
+		)
+		if doc:
+			doc_link = frappe.get_desk_link("Employee Checkin", doc)
+			frappe.throw(
+				_("This employee already has a log with the same timestamp.{0}").format("<Br>" + doc_link)
+			)
+
+def fetch_shift(self):
+		shift_actual_timings = get_actual_start_end_datetime_of_shift(
+			self.employee, get_datetime(self.time), True
+		)
+		if shift_actual_timings:
+			if (
+				shift_actual_timings.shift_type.determine_check_in_and_check_out
+				== "Strictly based on Log Type in Employee Checkin"
+				and not self.log_type
+				and not self.skip_auto_attendance
+			):
+				frappe.throw(
+					_("Log Type is required for check-ins falling in the shift: {0}.").format(
+						shift_actual_timings.shift_type.name
+					)
+				)
+			if not self.attendance:
+				self.shift = shift_actual_timings.shift_type.name
+				self.shift_actual_start = shift_actual_timings.actual_start
+				self.shift_actual_end = shift_actual_timings.actual_end
+				self.shift_start = shift_actual_timings.start_datetime
+				self.shift_end = shift_actual_timings.end_datetime
+		else:
+			self.shift = None
