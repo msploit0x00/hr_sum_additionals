@@ -8,19 +8,20 @@ from datetime import datetime , timedelta
 
 class CustomCheckin(EmployeeCheckin):
     def before_validate(self):
-        shift_type = self.shift
-        shift_data = frappe.get_doc("Shift Type" , shift_type )
-        late_penalty_after = shift_data.late_penalty_after
-        self.custom_late_penalty_after = late_penalty_after
-        self.custom_deduction = calculate_dif_time_and_date(self.time , late_penalty_after)
-        device_log = self.device_log
-        if device_log:
-            log = frappe.get_doc("Device Log", device_log)
-            if log.punch == 1:
+        pass
+        # shift_type = self.shift
+        # shift_data = frappe.get_doc("Shift Type" , shift_type )
+        # late_penalty_after = shift_data.late_penalty_after
+        # self.custom_late_penalty_after = late_penalty_after
+        # self.custom_deduction = calculate_dif_time_and_date(self.time , late_penalty_after)
+        # device_log = self.device_log
+        # if device_log:
+        #     log = frappe.get_doc("Device Log", device_log)
+        #     if log.punch == 1:
 
-                self.custom_early_diiference = abs(calculate_dif_time_and_date(log.time,shift_data.end_time))
+        #         self.custom_early_diiference = abs(calculate_dif_time_and_date(log.time,shift_data.end_time))
 
-    def on_change(self):
+    def after_insert(self):
         employee = self.employee
         doctype = "Employee Checkin"
         datatime = self.time
