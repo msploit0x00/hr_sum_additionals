@@ -18,6 +18,32 @@ class CustomCheckin(EmployeeCheckin):
     def validate(self):
        self.validate_duplicate_log()
        self.fetch_shift()
+
+
+
+
+       if self.log_type == 'OUT' and self.shift:
+              shift_data = frappe.get_doc("Shift Type", self.shift)
+              time_out = datetime.strptime(str(self.time), "%Y-%m-%d %H:%M:%S").time()
+
+
+              shift_data_end_time = datetime.strptime(str(shift_data.end_time), "%H:%M:%S").time()
+              if time_out < shift_data_end_time:
+                self.custom_early_diiference = round(float(abs(calculate_time_difference(self.time,shift_data.end_time))),2)
+                print(f"diff {self.custom_early_diiference}")
+
+       if self.log_type == 'IN' and self.shift:
+              shift_data = frappe.get_doc("Shift Type", self.shift)
+              time_in = datetime.strptime(str(self.time), "%Y-%m-%d %H:%M:%S").time()
+
+
+              shift_data_start_time = datetime.strptime(str(shift_data.end_time), "%H:%M:%S").time()
+              
+
+              if time_in > shift_data_start_time:
+
+                self.custom_deduction = round(float(abs(calculate_time_difference(self.time , shift_data.late_penalty_after))),2)
+                print(f"deduction {self.custom_deduction}")
 		# self.set_geolocation_from_coordinates()
         # shift_type = self.shift
         # shift_data = frappe.get_doc("Shift Type" , shift_type )
@@ -37,6 +63,17 @@ class CustomCheckin(EmployeeCheckin):
         datatime = self.time
         date = getdate(datatime)
         name = self.name
+
+        # if self.log_type == 'OUT' and self.shift:
+        #       shift_data = frappe.get_doc("Shift Type", self.shift)
+        #       self.custom_early_diiference = float(abs(calculate_time_difference(self.time,shift_data.end_time)))
+        #       print(f"diff {self.custom_early_diiference}")
+
+        # if self.log_type == 'IN' and self.shift:
+        #       shift_data = frappe.get_doc("Shift Type", self.shift)
+        #       self.custom_deduction = float(abs(calculate_time_difference(self.time , shift_data.late_penalty_after)))
+        #       print(f"deduction {self.custom_deduction}")
+
         # shift_data = None
         # if shift_data:
         #     shift_data = frappe.get_doc("Shift Type" , self.shift)
@@ -48,25 +85,47 @@ class CustomCheckin(EmployeeCheckin):
 
 
 
-# def calculate_dif_time_and_date(futureDate1,timeNow):
-#     futureDate = datetime.strptime(str(futureDate1), "%Y-%m-%d %H:%M:%S")
-#     nowParts = datetime.strptime(str(timeNow), "%H:%M:%S").time()
-#     nowDate = datetime(futureDate.year, futureDate.month, futureDate.day, int(nowParts.hour), int(nowParts.minute), int(nowParts.second))
-#     timeDifference = (futureDate - nowDate)
-#     totalAmount = (timeDifference.total_seconds() / 60) 
-#     result = totalAmount / 60
-#     print(result)
-#     return result
+def calculate_time_difference(time_str, late_penalty_after_str):
+    time_obj = datetime.strptime(str(time_str), "%Y-%m-%d %H:%M:%S")
 
-# def calculate_dif_time_and_date(futureDate1, timeNow):
-#     futureDate = datetime.strptime(futureDate1, "%Y-%m-%d %H:%M:%S")
-#     nowParts = datetime.strptime(str(timeNow), "%H:%M:%S")
-#     nowDate = datetime.combine(futureDate.date(), nowParts)
-#     timeDifference = futureDate - nowDate
-#     totalHours = timeDifference.total_seconds() / 3600
-#     print(totalHours)
-#     totalHoursStr = str(totalHours)
-#     return totalHoursStr
+    # Assuming late_penalty_after_str is a time string (modify if needed)
+    late_penalty_after_obj = datetime.strptime(str(late_penalty_after_str), "%H:%M:%S").time()
+
+    # Combine the date from time_obj with the time from late_penalty_after_obj
+    combined_time = datetime.combine(time_obj.date(), late_penalty_after_obj)
+
+    # Calculate the time difference
+    time_difference = time_obj - combined_time
+
+    # Convert the time difference to hours
+    hours_difference = time_difference.total_seconds() / 3600
+
+    return hours_difference
+
+
+
+
+
+
+def calculate_dif_time_and_date(futureDate1,timeNow):
+    futureDate = datetime.strptime(str(futureDate1), "%Y-%m-%d %H:%M:%S")
+    nowParts = datetime.strptime(str(timeNow), "%H:%M:%S").time()
+    nowDate = datetime(futureDate.year, futureDate.month, futureDate.day, int(nowParts.hour), int(nowParts.minute), int(nowParts.second))
+    timeDifference = (futureDate - nowDate)
+    totalAmount = (timeDifference.total_seconds() / 60) 
+    result = totalAmount / 60
+    print(result)
+    return result
+
+def calculate_dif_time_and_date(futureDate1, timeNow):
+    futureDate = datetime.strptime(futureDate1, "%Y-%m-%d %H:%M:%S")
+    nowParts = datetime.strptime(str(timeNow), "%H:%M:%S")
+    nowDate = datetime.combine(futureDate.date(), nowParts)
+    timeDifference = futureDate - nowDate
+    totalHours = timeDifference.total_seconds() / 3600
+    print(totalHours)
+    totalHoursStr = str(totalHours)
+    return totalHoursStr
 
 
 # def calculate_dif_time_and_date(futureDate1, timeNow):
@@ -92,6 +151,7 @@ class CustomCheckin(EmployeeCheckin):
 # from datetime import datetime, time
 
 from datetime import datetime, time
+# from datetime import datetime, time
 
 def calculate_dif_time_and_date_new(futureDate1, timeNow):
     # Check if futureDate1 is already a datetime object
@@ -106,20 +166,21 @@ def calculate_dif_time_and_date_new(futureDate1, timeNow):
     if isinstance(timeNow, str):
         nowParts = datetime.strptime(timeNow, "%H:%M:%S").time()
     elif isinstance(timeNow, time):
-        nowParts = timeNow
+        nowParts = str(timeNow)
     else:
         raise TypeError("timeNow should be either a string in '%H:%M:%S' format or a datetime.time object.")
     
     # Combine date from futureDate and time from timeNow
     nowDate = datetime.combine(futureDate.date(), nowParts)
     
-    # Calculate the time difference
-    timeDifference = futureDate - nowDate
+    # Calculate the time difference (absolute value to avoid negative result)
+    timeDifference = abs(futureDate - nowDate)
     
     # Convert the difference to hours
     totalHours = timeDifference.total_seconds() / 3600
     
     return totalHours
+
 
 
 from datetime import datetime, time
