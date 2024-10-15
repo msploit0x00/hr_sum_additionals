@@ -156,7 +156,7 @@
    "fieldname": "reptead_every",
    "fieldtype": "Select",
    "label": "Stop Reapeting Every",
-   "options": "\nMonth\nQuarter\nYear\nNEVER"
+   "options": "\nMonth\nQuarter\nHalf Year\nYear\nNEVER"
   },
   {
    "fieldname": "penalties_data",
@@ -288,7 +288,7 @@
   }
  ],
  "links": [],
- "modified": "2023-12-24 12:42:39.318224",
+ "modified": "2024-10-15 12:50:19.589448",
  "modified_by": "Administrator",
  "module": "Hr Sum Additionals",
  "name": "Penalties Rules",
