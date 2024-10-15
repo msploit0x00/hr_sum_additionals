@@ -259,6 +259,9 @@ def the_function_to_amount(name1, employee , doctype , ref_docname , date):
             elif name.reptead_every == 'Quarter':
                 amount = the_rule_repeated(name1, def_time, len(get_history_penalties_data_quarterly(employee, name.salary_component , date, name.name)))
                 return amount
+            elif name.repeated_every == 'Half Year':
+                amount = the_rule_repeated(name1,def_time,len(get_history_penalties_data_half_yearly(employee,name.salary_component, date,name.name)))
+                return amount
         elif name.is_repeated == 0:
             amount = the_rule_simpled(name1, def_time)
             return amount
@@ -418,6 +421,36 @@ def get_history_penalties_data_quarterly(employee, salary_component , date, name
      """, (salary_component, employee , date, name_of_rule), as_dict=1)
 
     return data
+
+
+
+def get_history_penalties_data_half_yearly(employee, salary_component, date, name_of_rule):
+    data = frappe.db.sql("""
+        SELECT
+            `employee` AS `employee`,
+            `salary_component` AS `component`
+        FROM
+            `tabEffected salaries`
+        WHERE
+            `salary_component` = %s
+            AND `employee` = %s
+            AND IF(MONTH(%s) <= 6, 1, 2) = IF(MONTH(`payroll_date`) <= 6, 1, 2)
+            AND `name_of_rule` = %s
+    """, (salary_component, employee, date, name_of_rule), as_dict=1)
+
+    return data
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @frappe.whitelist()
