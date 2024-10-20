@@ -259,7 +259,7 @@ def the_function_to_amount(name1, employee , doctype , ref_docname , date):
             elif name.reptead_every == 'Quarter':
                 amount = the_rule_repeated(name1, def_time, len(get_history_penalties_data_quarterly(employee, name.salary_component , date, name.name)))
                 return amount
-            elif name.repeated_every == 'Half Year':
+            elif name.reptead_every == 'Half Year':
                 amount = the_rule_repeated(name1,def_time,len(get_history_penalties_data_half_yearly(employee,name.salary_component, date,name.name)))
                 return amount
         elif name.is_repeated == 0:
