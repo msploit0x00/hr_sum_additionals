@@ -8,6 +8,6 @@ from hr_sum_additionals.hr_sum_additionals.doctype.penalties_rules.penalties_rul
 
 
 class EmployeePenalty(Document):
-	def on_change(self):
+	def on_submit(self):
 		if self.docstatus == 1:
 			get_the_rule(self.employee , self.penalty_date , "Employee Penalty" , self.name)
