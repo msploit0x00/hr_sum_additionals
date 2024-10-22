@@ -37,7 +37,7 @@ class CustomCheckin(EmployeeCheckin):
               time_in = datetime.strptime(str(self.time), "%Y-%m-%d %H:%M:%S").time()
 
 
-              shift_data_start_time = datetime.strptime(str(shift_data.end_time), "%H:%M:%S").time()
+              shift_data_start_time = datetime.strptime(str(shift_data.start_time), "%H:%M:%S").time()
               
 
               if time_in > shift_data_start_time:
