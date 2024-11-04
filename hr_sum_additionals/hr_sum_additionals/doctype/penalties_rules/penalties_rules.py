@@ -11,7 +11,7 @@ def create_effected_salary(employee, salary_effects, amount, payroll_date, name_
     log = frappe.new_doc("Effected salaries")
     log.employee = employee
     log.salary_component = salary_effects
-    log.amount = amount
+    log.amount = 1.0 if not amount else amount
     log.payroll_date = payroll_date
     log.ref_docname = ref_docname
     log.ref_doctype = related_permission_type
