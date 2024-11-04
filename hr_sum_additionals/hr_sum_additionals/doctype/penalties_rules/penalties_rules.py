@@ -16,7 +16,7 @@ def create_effected_salary(employee, salary_effects, amount, payroll_date, name_
     log.ref_docname = ref_docname
     log.ref_doctype = related_permission_type
     log.name_of_rule = name_of_rule
-    log.insert(ignore_permissions=True, ignore_mandatory=True)
+    log.insert(ignore_permissions=True)
     frappe.db.commit()
     frappe.msgprint("Created")
 
