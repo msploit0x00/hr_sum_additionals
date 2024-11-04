@@ -331,15 +331,15 @@ def the_rule_repeated(name1, def_time, penalties_month_array):
     
     elif name.calculation_method == 'Value On A specific Field':
         for rule in sorted_array:
-            rate = rule['rate']
+            rate = float(rule['rate'])
             times = rule['times']
 
             if times == penalties_month:
-                max_number = rate * def_time
+                max_number = float(rate) * float(def_time)
                 break 
 
         if max_number is None:
-            max_number = sorted_array[-1]['rate'] * def_time
+            max_number = float(sorted_array[-1]['rate']) * float(def_time)
 
     return max_number
 
