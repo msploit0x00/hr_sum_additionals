@@ -329,7 +329,7 @@ def the_rule_repeated(name1, def_time, penalties_month_array):
         if max_number is None:
             max_number = sorted_array[-1]['fixed_amount_value']
     
-    elif name.calculation_method == 'Value On A sepcific Field':
+    elif name.calculation_method == 'Value On A specific Field':
         for rule in sorted_array:
             rate = rule['rate']
             times = rule['times']
