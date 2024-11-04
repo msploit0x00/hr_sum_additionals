@@ -55,7 +55,10 @@ def get_the_rule(employee_id, date, doctype, ref_docname):
                                         rule_name = rule.name
                                         related_permission_type = rule.related_perimmision_type
                                         if rule.effect_on_salary == 1:
-                                            create_effected_salary(employee_id, salary_effects, amount, date, rule_name, related_permission_type, ref_docname)
+                                            if amount is not None:
+                                                create_effected_salary(employee_id, salary_effects, amount, date, rule_name, related_permission_type, ref_docname)
+                                            else:
+                                                print("mina")
                                         if rule.update_leave == 1:
                                             name_of_leave = frappe.db.get_value('Leave Allocation', {'employee_name': employee.employee_name , 'leave_type': rule.leave_type}, 'name')
                                             value_of_leave = frappe.db.get_value('Leave Allocation', {'employee_name': employee.employee_name , 'leave_type': rule.leave_type}, 'new_leaves_allocated')
