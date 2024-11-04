@@ -316,6 +316,9 @@ def the_rule_repeated(name1, def_time, penalties_month_array):
 
     max_number = None
 
+    if not sorted_array:
+        print("mina")
+
 
     if name.calculation_method == 'Fixed Amount':
         for rule in sorted_array:
@@ -326,7 +329,7 @@ def the_rule_repeated(name1, def_time, penalties_month_array):
                 max_number = fixed_amount_value
                 break 
 
-        if max_number is None:
+        if max_number is None and sorted_array:
             max_number = sorted_array[-1]['fixed_amount_value']
     
     elif name.calculation_method == 'Value On A specific Field':
@@ -338,7 +341,7 @@ def the_rule_repeated(name1, def_time, penalties_month_array):
                 max_number = float(rate) * float(def_time)
                 break 
 
-        if max_number is None:
+        if max_number is None and sorted_array:
             max_number = float(sorted_array[-1]['rate']) * float(def_time)
 
     return max_number
