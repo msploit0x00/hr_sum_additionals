@@ -97,10 +97,10 @@ def calculate_time_difference(time_str, late_penalty_after_str):
     # Calculate the time difference
     time_difference = time_obj - combined_time
 
-    # Convert the time difference to hours
-    hours_difference = time_difference.total_seconds() / 3600
+    # Convert the time difference to minutes instead of hours
+    minutes_difference = time_difference.total_seconds() / 60
 
-    return hours_difference
+    return minutes_difference
 
 
 
@@ -176,10 +176,10 @@ def calculate_dif_time_and_date_new(futureDate1, timeNow):
     # Calculate the time difference (absolute value to avoid negative result)
     timeDifference = abs(futureDate - nowDate)
     
-    # Convert the difference to hours
-    totalHours = timeDifference.total_seconds() / 3600
+    # Convert the difference to minutes
+    totalMinutes = timeDifference.total_seconds() / 60
     
-    return totalHours
+    return totalMinutes
 
 
 
@@ -212,10 +212,10 @@ def calculate_dif_time_and_date_new(futureDate1, timeNow):
     # Calculate the time difference
     timeDifference = futureDate - nowDate
     
-    # Convert the difference to hours
-    totalHours = timeDifference.total_seconds() / 3600
+    # Convert the difference to minutes
+    totalMinutes = timeDifference.total_seconds() / 60
     
-    return totalHours
+    return totalMinutes
 
 
 
